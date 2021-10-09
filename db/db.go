@@ -5,21 +5,21 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/golang-api-task/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func Database() *mongo.Client {
-	clientOptions := options.Client().ApplyURI("mongodb+srv://deepak:deepak123@cluster0.fdt0r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority") // Connect to //MongoDB
+	clientOptions := options.Client().ApplyURI(config.MONGO_URI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
-	// Check the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Connected to MongoDB!")
+	fmt.Println("Connected to MongoDB Database")
 	return client
 }
