@@ -67,10 +67,8 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	filter := bson.M{"_id": objectIDS}
 	err := client.Database("InstagramDB").Collection("users").FindOne(context.Background(), filter).Decode(&result)
 	if err == nil {
-		fmt.Println(result)
 		json.NewEncoder(w).Encode(result)
 	} else {
-		fmt.Println(err)
 		w.Write([]byte(err.Error()))
 	}
 
