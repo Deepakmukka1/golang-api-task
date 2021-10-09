@@ -27,9 +27,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	client := db.DatabaseInit()
-	w.Header().Set("Content-Type", "application/json") // for adding       //Content-type
+	w.Header().Set("Content-Type", "application/json")
 	var person models.User
-	err := json.NewDecoder(r.Body).Decode(&person) // storing in person   //variable of type user
+	err := json.NewDecoder(r.Body).Decode(&person)
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -48,14 +48,30 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Println(strings.Split(r.URL.Path, "/"))
+	parts := strings.Split(r.URL.String(), "/") // parts contains the data of /user/id is split
+	if len(parts) != 3 {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 	if r.Method != "GET" {
 		fmt.Fprint(w, "You can only do GET on this route")
 		return
 	}
 	client := db.DatabaseInit()
-	w.Header().Set("Content-Type", "application/json") // for adding       //Content-type
-	data, _ := client.Database("InstagramDB").Collection("users").Find(context.TODO(), bson.D{})
-	fmt.Print(data)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	objectIDS, _ := primitive.ObjectIDFromHex(parts[2])
+
+	result := models.User{}
+	filter := bson.M{"_id": objectIDS}
+	err := client.Database("InstagramDB").Collection("users").FindOne(context.Background(), filter).Decode(&result)
+	if err == nil {
+		fmt.Println(result)
+		json.NewEncoder(w).Encode(result)
+	} else {
+		fmt.Println(err)
+		w.Write([]byte(err.Error()))
+	}
 
 }

@@ -10,6 +10,6 @@ import (
 func main() {
 
 	http.HandleFunc("/users", controllers.CreateUser)
-	// http.HandleFunc("/users/:id", controllers.GetUsers)
+	http.HandleFunc("/users/", controllers.GetUsers)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
