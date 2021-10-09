@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func Database() *mongo.Client {
+func DatabaseInit() *mongo.Client {
 	clientOptions := options.Client().ApplyURI(config.MONGO_URI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
@@ -20,6 +20,6 @@ func Database() *mongo.Client {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Connected to MongoDB Database")
+	fmt.Println("Mongodb status: Connected")
 	return client
 }
