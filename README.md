@@ -6,6 +6,7 @@
 The task is to develop a basic version of aInstagram. You are only required to develop the API for the
 system. 
 
+Only libraries given in task are  used , no 3rd party library is used.
 
 ## Project structure
 
@@ -24,7 +25,7 @@ system.
 ## Steps to run
 
 ```
-git clone https://github.com/Deepakmukka1/golang-api-task
+git clone https://github.com/Deepakmukka1/golang-api-task.git
 ```
 
 ```
@@ -39,7 +40,7 @@ go run main.go
 
 ### Route ```/users``` -  POST REQUEST
 
-Go to localhost:8080/users and create a `POST request` with JSON request body 
+Go to http://localhost:8080/users and create a new user `POST request` with JSON request body 
 Sample request body:
 
 ```
@@ -66,7 +67,9 @@ Data of user passed by ID will be displayed
 
 ![image](https://user-images.githubusercontent.com/56472120/136666006-65f41063-d460-4e23-999d-8bad3c79ecf9.png)
 
-### Route ```/posts/id``` - GET Request
+
+### Route ```/posts/id``` - GET REQUEST
+
 
 ![image](https://user-images.githubusercontent.com/56472120/136666038-e555bc89-faa1-422b-8779-31741d9d4cbd.png)
 
