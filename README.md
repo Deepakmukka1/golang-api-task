@@ -6,7 +6,7 @@
 The task is to develop a basic version of aInstagram. You are only required to develop the API for the
 system. 
 
-Only libraries given in task are  used , no 3rd party library is used.
+Only libraries given in task are  used.
 
 ## Project structure
 
