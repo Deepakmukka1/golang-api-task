@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/golang-api-task/db"
 	"github.com/golang-api-task/models"
@@ -28,6 +29,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Print(err)
 	}
 	post.Id = primitive.NewObjectID()
+	post.TimeStamp = time.Now()
 	var postCollection = client.Database("InstagramDB").Collection("posts")
 	insertResult, err := postCollection.InsertOne(context.TODO(), post)
 	if err != nil {
