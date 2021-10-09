@@ -21,9 +21,9 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	client := db.DatabaseInit()
-	w.Header().Set("Content-Type", "application/json") // for adding       //Content-type
+	w.Header().Set("Content-Type", "application/json")
 	var post models.Post
-	err := json.NewDecoder(r.Body).Decode(&post) // storing in person   //variable of type user
+	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		fmt.Print(err)
 	}
@@ -38,7 +38,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 func GetPost(w http.ResponseWriter, r *http.Request) {
 
-	parts := strings.Split(r.URL.String(), "/")
+	parts := strings.Split(r.URL.String(), "/") // parts contains the data of /post/id is split
 	if len(parts) != 3 {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -48,13 +48,20 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	client := db.DatabaseInit()
-	w.Header().Set("Content-Type", "application/json") // for adding       //Content-type
-	stringID := "ObjectId" + parts[2] + ")"
-	SingleResult := client.Database("InstagramDB").Collection("users").FindOne(context.TODO(), bson.M{"_id": stringID})
-	// result.Decode(models.User{})
-	// jsonValue, _ := json.Marshal(SingleResult)
-	// fmt.Fprintf(w, parts[2])
-	fmt.Fprint(w, SingleResult.Decode(models.User{}))
-	// json.NewEncoder(w).Encode(result)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	objectIDS, _ := primitive.ObjectIDFromHex(parts[2])
+
+	result := models.Post{}
+	filter := bson.M{"_id": objectIDS}
+	err := client.Database("InstagramDB").Collection("posts").FindOne(context.Background(), filter).Decode(&result)
+	if err == nil {
+		fmt.Println(result)
+		json.NewEncoder(w).Encode(result)
+	} else {
+		fmt.Println(err)
+		w.Write([]byte(err.Error()))
+	}
 
 }
