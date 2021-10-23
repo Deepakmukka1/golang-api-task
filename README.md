@@ -3,7 +3,7 @@
 
 # Developer: Mukka Deepak
 
-The task is to develop a basic version of aInstagram. You are only required to develop the API for the
+The task is to develop a basic version of a Instagram(backend) given by Appointy company. You are only required to develop the API for the
 system. 
 
 Only libraries given in task are  used.
